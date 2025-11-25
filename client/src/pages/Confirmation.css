@@ -1,0 +1,232 @@
+.confirmation-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #00BAF2 0%, #002970 100%);
+  padding: 40px 20px;
+}
+
+.confirmation-card {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.confirmation-logo {
+  font-size: 32px;
+  font-weight: bold;
+  color: #00BAF2;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00BAF2 0%, #002970 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  margin: 0 auto 20px;
+  animation: scaleIn 0.5s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.confirmation-header h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.confirmation-header p {
+  color: #666;
+  font-size: 16px;
+}
+
+.confirmation-content {
+  margin-bottom: 40px;
+}
+
+.info-section {
+  margin-bottom: 30px;
+  padding: 25px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  border-left: 4px solid #00BAF2;
+}
+
+.info-section h3 {
+  font-size: 20px;
+  color: #00BAF2;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.document-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.document-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+}
+
+.document-label {
+  font-weight: 500;
+  color: #333;
+  min-width: 200px;
+}
+
+.document-link {
+  color: #00BAF2;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.document-link:hover {
+  color: #002970;
+  text-decoration: underline;
+}
+
+.document-missing {
+  color: #999;
+  font-style: italic;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+}
+
+.info-label {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.info-value {
+  font-size: 16px;
+  color: #333;
+  font-weight: 500;
+}
+
+.address-display {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  line-height: 1.8;
+}
+
+.address-display p {
+  color: #333;
+  margin: 5px 0;
+}
+
+.confirmation-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding-top: 30px;
+  border-top: 2px solid #f0f0f0;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 14px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex: 1;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00BAF2 0%, #002970 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 186, 242, 0.35);
+}
+
+.btn-secondary {
+  background: white;
+  color: #00BAF2;
+  border: 2px solid #00BAF2;
+}
+
+.btn-secondary:hover {
+  background: #e6f6ff;
+}
+
+.loading-spinner {
+  text-align: center;
+  font-size: 24px;
+  color: white;
+  padding: 40px;
+}
+
+@media (max-width: 768px) {
+  .confirmation-card {
+    padding: 30px 20px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .document-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .document-label {
+    min-width: auto;
+  }
+
+  .confirmation-footer {
+    flex-direction: column;
+  }
+}
+
