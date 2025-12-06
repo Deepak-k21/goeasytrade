@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = ({ children, allowedRoles }) => {
   const { user, loading } = useContext(AuthContext);
 
   if (loading) {
@@ -20,7 +20,22 @@ const PrivateRoute = ({ children }) => {
     );
   }
 
-  return user ? children : <Navigate to="/login" replace />;
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (allowedRoles && user.businessInfo && !allowedRoles.includes(user.businessInfo.role)) {
+    // Redirect to a dashboard based on their existing role or a general unauthorized page
+    if (user.businessInfo.role === 'seller') {
+      return <Navigate to="/seller/primary" replace />;
+    } else if (user.businessInfo.role === 'buyer') {
+      return <Navigate to="/buyer" replace />;
+    } else {
+      return <Navigate to="/login" replace />;
+    }
+  }
+
+  return children;
 };
 
 export default PrivateRoute;

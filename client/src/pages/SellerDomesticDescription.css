@@ -1,0 +1,126 @@
+.seller-domestic-description-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to start for better table scrolling */
+  min-height: 100vh;
+  background-color: #f4f7f6;
+  padding: 40px 20px;
+}
+
+.description-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  padding: 40px;
+  width: 100%;
+  max-width: 1400px; /* Increased max-width for wider table */
+  margin: 0 auto;
+}
+
+.description-card h2 {
+  font-size: 28px;
+  color: #3f51b5;
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto; /* Enable horizontal scrolling for the table */
+  margin-bottom: 30px;
+}
+
+.crop-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1200px; /* Minimum width to ensure columns are visible */
+}
+
+.crop-details-table th,
+.crop-details-table td {
+  border: 1px solid #e0e0e0;
+  padding: 12px 15px;
+  text-align: left;
+  white-space: nowrap; /* Keep content on a single line */
+}
+
+.crop-details-table th {
+  background-color: #f0f4f8;
+  color: #333;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.crop-details-table tbody tr.existing-data-row:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.crop-details-table tbody tr:hover {
+  background-color: #eef7ff;
+}
+
+.crop-details-table td {
+  font-size: 14px;
+  color: #555;
+}
+
+.new-entry-row input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.new-entry-row input:focus {
+  outline: none;
+  border-color: #3f51b5;
+  box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+}
+
+.add-row-button {
+  display: block;
+  width: 280px;
+  padding: 14px;
+  background-color: #4caf50; /* Green for add button */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 20px auto 0; /* Center the button and add top margin */
+}
+
+.add-row-button:hover {
+  background-color: #43a047;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .description-card {
+    padding: 25px;
+  }
+
+  .description-card h2 {
+    font-size: 24px;
+  }
+
+  .crop-details-table {
+    min-width: 900px; /* Adjust min-width for smaller screens if needed */
+  }
+
+  .crop-details-table th,
+  .crop-details-table td {
+    padding: 10px;
+  }
+
+  .add-row-button {
+    width: 100%;
+    font-size: 16px;
+  }
+}

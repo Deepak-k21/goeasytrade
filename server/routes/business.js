@@ -34,19 +34,33 @@ const upload = multer({
 router.post('/submit', auth, upload.fields([
   { name: 'certificateOfIncorporation', maxCount: 1 },
   { name: 'companyPanCard', maxCount: 1 },
-  { name: 'msmeRegistration', maxCount: 1 }
+  { name: 'msmeRegistration', maxCount: 1 },
+  { name: 'gstFile', maxCount: 1 },
+  { name: 'cancelCheque', maxCount: 1 }
 ]), async (req, res) => {
   try {
     const {
-      gstNo,
       msmeType,
       primaryContactNo,
       secondaryContactNo,
       primaryEmailId,
       secondaryEmailId,
       businessAddress,
-      contactAddress
+      contactAddress,
+      role,
+      sellerInfo
     } = req.body;
+
+    // Validate required files
+    if (!req.files.certificateOfIncorporation) {
+      return res.status(400).json({ message: 'Certificate of Incorporation is required' });
+    }
+    if (!req.files.companyPanCard) {
+      return res.status(400).json({ message: 'Company PAN Card is required' });
+    }
+    if (!req.files.msmeRegistration) {
+      return res.status(400).json({ message: 'MSME Registration is required' });
+    }
 
     // Parse addresses
     const businessAddr = typeof businessAddress === 'string' 
@@ -56,19 +70,27 @@ router.post('/submit', auth, upload.fields([
       ? JSON.parse(contactAddress) 
       : contactAddress;
 
+    // Parse seller info if provided
+    let parsedSellerInfo = undefined;
+    if (sellerInfo) {
+      parsedSellerInfo = typeof sellerInfo === 'string' ? JSON.parse(sellerInfo) : sellerInfo;
+    }
+
     const businessData = {
       userId: req.user._id,
-      gstNo,
       msmeRegistration: {
         type: msmeType
       },
+      // contact fields are optional in initial submission
       primaryContactNo,
       secondaryContactNo,
       primaryEmailId,
       secondaryEmailId,
       businessAddress: businessAddr,
       contactAddress: contactAddr,
-      status: 'completed'
+      role,
+      sellerInfo: parsedSellerInfo,
+      status: 'pending'
     };
 
     // Handle file uploads
@@ -94,6 +116,22 @@ router.post('/submit', auth, upload.fields([
       businessData.msmeRegistration.uploadedAt = new Date();
     }
 
+    if (req.files.gstFile) {
+      businessData.gstFile = {
+        filename: req.files.gstFile[0].originalname,
+        path: req.files.gstFile[0].path,
+        uploadedAt: new Date()
+      };
+    }
+
+    if (req.files.cancelCheque) {
+      businessData.cancelCheque = {
+        filename: req.files.cancelCheque[0].originalname,
+        path: req.files.cancelCheque[0].path,
+        uploadedAt: new Date()
+      };
+    }
+
     let business = await Business.findOne({ userId: req.user._id });
 
     if (business) {
@@ -117,6 +155,37 @@ router.get('/info', auth, async (req, res) => {
       return res.status(404).json({ message: 'Business information not found' });
     }
     res.json(business);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Save role and (optional) seller details, mark as completed
+router.post('/role', auth, async (req, res) => {
+  try {
+    const { role, sellerInfo } = req.body;
+    let parsedSellerInfo = undefined;
+    if (sellerInfo) {
+      parsedSellerInfo = typeof sellerInfo === 'string' ? JSON.parse(sellerInfo) : sellerInfo;
+    }
+
+    const update = {
+      role,
+      sellerInfo: parsedSellerInfo,
+      status: 'completed'
+    };
+
+    const business = await Business.findOneAndUpdate(
+      { userId: req.user._id },
+      update,
+      { new: true }
+    );
+
+    if (!business) {
+      return res.status(404).json({ message: 'Business information not found' });
+    }
+
+    res.json({ message: 'Role details saved successfully', business });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
